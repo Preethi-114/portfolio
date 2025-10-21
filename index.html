@@ -11,318 +11,456 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- AOS (Animation On Scroll) -->
+  <!-- AOS for scroll animations -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
 
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
   <style>
-    :root {
+    /* ---------- Palette ---------- */
+    :root{
       --accent: #ffdd57;
       --glass-border: rgba(255,255,255,0.08);
       --muted: rgba(255,255,255,0.8);
     }
 
-    html,body {
+    html,body{
       height:100%;
-      background-color:#0b1326;
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background-color: #0b1326; /* plain dark background */
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      color:#fff;
-      overflow-x:hidden;
+      color: #fff;
     }
 
-    /* ---------- Glass container ---------- */
+    /* glass container */
     .glass {
-      background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.03));
-      border-radius:16px;
-      border:1px solid var(--glass-border);
-      box-shadow:0 8px 30px rgba(2,6,23,0.45);
-      backdrop-filter:blur(6px) saturate(160%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+      backdrop-filter: blur(6px) saturate(160%);
     }
 
-    /* ---------- Navbar ---------- */
-    nav {
-      backdrop-filter:blur(10px) saturate(160%);
-      background:rgba(11,19,38,0.85);
-      border-bottom:1px solid rgba(255,255,255,0.06);
-      box-shadow:0 2px 15px rgba(0,0,0,0.3);
-    }
-    .navbar-toggler {
-      background:rgba(255,255,255,0.1);
-      padding:6px 10px;
-      border-radius:8px;
-      transition:all 0.3s ease;
-    }
-    .navbar-toggler:hover {
-      background:rgba(255,255,255,0.2);
-    }
-
-    /* ---------- Hero ---------- */
+    /* hero circle */
     .hero-circle {
-      width:240px;height:240px;border-radius:9999px;
-      display:grid;place-items:center;
-      background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(0,0,0,0.04));
-      border:4px solid rgba(255,255,255,0.18);
-      transform:translateY(-10px);
+      width:240px; height:240px; border-radius:9999px; display:grid; place-items:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.04));
+      border: 4px solid rgba(255,255,255,0.18);
+      transform: translateY(-10px);
     }
-    .hero-circle img {
-      width:92%;height:92%;object-fit:cover;border-radius:9999px;
+    .hero-circle img { width:92%; height:92%; object-fit:cover; border-radius:9999px; }
+
+    /* profile float */
+    .float-anim { animation: floatY 5s ease-in-out infinite; }
+    @keyframes floatY { 0%{transform:translateY(0)} 50%{transform:translateY(-10px)} 100%{transform:translateY(0)} }
+
+    /* heading style */
+    .lg-title { font-size:2.6rem; font-weight:800; letter-spacing:-0.02em; line-height:1; }
+    .role-badge { background: rgba(0,0,0,0.18); padding:6px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.06); font-weight:600; color:var(--muted); }
+
+    /* project card */
+    .project-card { border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.06); }
+
+    /* contact inputs */
+    .input-ghost { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); color:#fff; padding:.85rem 1rem; border-radius:10px; width:100%; outline:none;}
+    .input-ghost::placeholder{ color: rgba(255,255,255,0.5); }
+
+    /* floating CTA */
+    .cta-primary { background: linear-gradient(90deg, #fff 0%, #ffefc0 100%); color: #08121a; font-weight:700; padding:.7rem 1rem; border-radius:10px; box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+
+    /* typing cursor blink */
+    @keyframes blink { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
+
+    /* responsive fine-tuning */
+    @media (max-width:768px){
+      .lg-title{ font-size:1.8rem; }
+      .hero-circle{ width:180px; height:180px; }
+      .float-col { margin-top:1.25rem; }
     }
-
-    .float-anim {animation:floatY 5s ease-in-out infinite;}
-    @keyframes floatY {0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
-
-    .lg-title {font-size:2.6rem;font-weight:800;letter-spacing:-0.02em;line-height:1.1;}
-    .cta-primary {
-      background:linear-gradient(90deg,#fff 0%,#ffefc0 100%);
-      color:#08121a;font-weight:700;
-      padding:0.7rem 1.2rem;border-radius:10px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.35);
-      transition:all 0.3s ease;
-    }
-    .cta-primary:hover {transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,0.45);}
-
-    .project-card {
-      border-radius:12px;overflow:hidden;
-      border:1px solid rgba(255,255,255,0.06);
-      transition:transform 0.3s ease;
-    }
-    .project-card:hover {transform:translateY(-5px);}
-
-    .input-ghost {
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.06);
-      color:#fff;padding:.85rem 1rem;border-radius:10px;width:100%;outline:none;
-    }
-    .input-ghost::placeholder{color:rgba(255,255,255,0.5);}
-
-    /* ---------- Social icons ---------- */
-    #contact-info a {transition:transform 0.3s ease,opacity 0.3s ease;opacity:0.85;}
-    #contact-info a:hover {transform:scale(1.15);opacity:1;}
-
-    /* ---------- Responsive ---------- */
-    @media (max-width: 576px) {
-      .lg-title {font-size:1.6rem;}
-      .hero-circle {width:150px;height:150px;}
-      .cta-primary {width:100%;text-align:center;}
-      nav .collapse {background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;margin-top:12px;text-align:center;}
-      nav .collapse a {display:block;width:100%;padding:10px;}
-      .project-card img {height:160px!important;}
-    }
-
-    @media (min-width:577px) and (max-width:992px) {
-      .lg-title {font-size:2rem;}
-      .hero-circle {width:200px;height:200px;}
-    }
-
-    @media (min-width:993px) and (max-width:1400px) {
-      .lg-title {font-size:2.4rem;}
-    }
-
-    @media (min-width:1401px) {
-      .lg-title {font-size:2.8rem;}
-      .hero-circle {width:260px;height:260px;}
-    }
-
-    @keyframes blink {0%,50%,100%{opacity:1}25%,75%{opacity:0}}
   </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<nav class="py-3 fixed-top z-50 glass">
-  <div class="container d-flex justify-content-between align-items-center">
-    <!-- Brand -->
-    <div class="d-flex align-items-center gap-3">
-      <div class="text-lg font-extrabold text-white fs-4">MyPortfolio</div>
-    </div>
+  <!-- NAV -->
+  <nav class="py-4">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <div class="text-lg font-extrabold"> <span style="color:#fff">MyPortfolio</span></div>
+        
+      </div>
 
-    <!-- Hamburger -->
-    <button
-      class="navbar-toggler d-lg-none border-0 text-white"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navMenu"
-      aria-controls="navMenu"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
-      <i class="fas fa-bars fs-4"></i>
-    </button>
-
-    <!-- Links -->
-    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
-      <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2 mt-3 mt-lg-0">
+      <div class="d-flex gap-2 align-items-center">
         <a class="text-sm text-white/90 px-3 py-2 rounded hover:bg-white/10" href="#projects">Projects</a>
         <a class="text-sm text-white/90 px-3 py-2 rounded hover:bg-white/10" href="#about">About</a>
         <a class="text-sm text-white/90 px-3 py-2 rounded hover:bg-white/10" href="#contact">Contact</a>
-        <a class="ms-lg-2 mt-2 mt-lg-0 cta-primary text-center" href="#contact">Hire Me</a>
+        <a class="ms-2 cta-primary" href="#contact">Hire Me</a>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- HERO -->
-<header class="pt-8 pb-12 mt-5 relative overflow-hidden">
-  <div class="container relative z-10">
-    <div class="row align-items-center">
-      <div class="col-lg-6" data-aos="fade-right">
-        <h1 class="lg-title text-white">Hi — I'm <span class="text-white">PREETHI SANKAR</span></h1>
-        <p class="mt-3 text-white/80">I am a web developer committed to crafting modern, responsive, and high-quality digital experiences.</p>
-        <div class="mt-4 d-flex flex-wrap gap-3">
-          <a class="cta-primary" href="./assets/PREETHI S-1.pdf">Download CV</a>
-          <a class="text-white/90 px-4 py-2 rounded hover:bg-white/8 glass" href="#contact">Contact</a>
+  <!-- HERO -->
+  <header class="pt-8 pb-12 relative overflow-hidden">
+    <div class="container relative z-10">
+      <div class="row align-items-center">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="mb-4">
+            <h1 class="lg-title text-white">Hi — I'm <span id="yourName" class="text-white">PREETHI SANKAR</span></h1>
+            <p class="mt-3 text-white/80 max-w-xl">I am a web developer committed to crafting modern, responsive, and high-quality digital experiences.
+            <div class="mt-6 d-flex gap-3 flex-wrap">
+              <a class="cta-primary" href="C:\Users\JEEVA\Desktop\portfolio\assets\PREETHI S-1.pdf">Download CV</a>
+              <a class="text-white/90 px-4 py-2 rounded hover:bg-white/8 glass" href="#contact">Contact</a>
+            </div>
+          </div>
+
+          <!-- mini skill badges -->
+          <div class="mt-6 d-flex gap-3 flex-wrap">
+            <div class="glass px-3 py-2 flex items-center gap-2"><i class="fab fa-react text-blue-300"></i> <span class="text-sm">React</span></div>
+            <div class="glass px-3 py-2 flex items-center gap-2"><i class="fab fa-js text-yellow-300"></i> <span class="text-sm">JavaScript</span></div>
+            <div class="glass px-3 py-2 flex items-center gap-2"><i class="fas fa-paint-brush text-pink-300"></i> <span class="text-sm">UI/UX</span></div>
+          </div>
         </div>
 
-        <div class="mt-4 d-flex gap-3 flex-wrap">
-          <div class="glass px-3 py-2 flex items-center gap-2"><i class="fab fa-react text-blue-300"></i> React</div>
-          <div class="glass px-3 py-2 flex items-center gap-2"><i class="fab fa-js text-yellow-300"></i> JavaScript</div>
-          <div class="glass px-3 py-2 flex items-center gap-2"><i class="fas fa-paint-brush text-pink-300"></i> UI/UX</div>
-        </div>
-      </div>
+        <div class="col-lg-6 text-center float-col" data-aos="fade-left">
+          <div class="hero-circle mx-auto float-anim">
+            <img src="C:\Users\JEEVA\Desktop\portfolio\assets\portfolio.jpeg" alt="">
+          </div>
 
-      <div class="col-lg-6 text-center mt-4 mt-lg-0" data-aos="fade-left">
-        <div class="hero-circle mx-auto float-anim">
-          <img src="./assets/portfolio.jpeg" alt="">
-        </div>
-        <div class="mt-4 text-white/90">
-          <span id="typedLine" class="font-semibold"></span>
-          <span id="typedCursor" style="display:inline-block;width:8px;height:18px;background:var(--accent);margin-left:8px;border-radius:2px;animation:blink 900ms steps(1) infinite;"></span>
+          <!-- typing line under image -->
+          <div class="mt-4 text-white/90">
+            <span id="typedLine" class="font-semibold"></span>
+            <span id="typedCursor" style="display:inline-block; width:8px; height:18px; background:var(--accent); margin-left:8px; border-radius:2px; animation:blink 900ms steps(1) infinite;"></span>
+          </div>
+
         </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- ABOUT -->
+  <!-- ABOUT -->
 <section id="about" class="py-10 bg-gray-900">
   <div class="container">
     <div class="row g-5 align-items-center">
+      <!-- Left Column -->
       <div class="col-lg-6" data-aos="fade-up">
         <div class="glass p-5">
           <h3 class="mb-4 text-white">About Me</h3>
-          <p class="text-white/80 mb-4">I build modern web applications with great user experience. I enjoy turning good ideas into beautiful, fast, and accessible products.</p>
-          <div class="row">
-            <div class="col-6"><div class="text-sm text-white/70">Location</div><div class="fw-semibold text-white">Trichy, India</div></div>
-            <div class="col-6"><div class="text-sm text-white/70">Availability</div><div class="fw-semibold text-white">Open to work</div></div>
+          <p class="text-white/80 mb-4">
+            I build modern web applications with great user experience. I enjoy turning good ideas into beautiful, fast, and accessible products.
+          </p>
+
+          <div class="row mb-4">
+            <div class="col-6">
+              <div class="mb-2">
+                <div class="text-sm text-white/70">Location</div>
+                <div class="fw-semibold text-white">Trichy, India</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mb-2">
+                <div class="text-sm text-white/70">Availability</div>
+                <div class="fw-semibold text-white">Open to work</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Column: Skills -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="120">
+        <div class="row g-3">
+          <!-- Frontend -->
+          <div class="col-sm-6">
+            <div class="glass p-3 h-100">
+              <h6 class="text-white mb-2">Frontend Developer</h6>
+              <p class="text-white/70 text-sm">
+                I'm a front-end developer with experience in building responsive and optimized websites using HTML, CSS, JavaScript, and modern frameworks.
+              </p>
+            </div>
+          </div>
+
+          <!-- Backend -->
+          <div class="col-sm-6">
+            <div class="glass p-3 h-100">
+              <h6 class="text-white mb-2">Backend Developer</h6>
+              <p class="text-white/70 text-sm">
+                Skilled in server-side programming, database management, and creating APIs to make web applications robust and scalable.
+              </p>
+            </div>
+          </div>
+
+          <!-- UI/UX -->
+          <div class="col-sm-6">
+            <div class="glass p-3 h-100">
+              <h6 class="text-white mb-2">UI/UX Designer</h6>
+              <p class="text-white/70 text-sm">
+                Passionate about designing user-friendly interfaces with smooth interactions, ensuring a seamless user experience.
+              </p>
+            </div>
+          </div>
+
+          <!-- Full-Stack -->
+          <div class="col-sm-6">
+            <div class="glass p-3 h-100">
+              <h6 class="text-white mb-2">Full-Stack Developer</h6>
+              <p class="text-white/70 text-sm">
+                Experienced in combining frontend and backend skills to build complete, functional, and efficient web applications.
+              </p>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="row g-3">
-          <div class="col-sm-6"><div class="glass p-3 h-100"><h6>Frontend Developer</h6><p class="text-white/70 text-sm">Building responsive websites using HTML, CSS, JS, and frameworks.</p></div></div>
-          <div class="col-sm-6"><div class="glass p-3 h-100"><h6>Backend Developer</h6><p class="text-white/70 text-sm">Creating APIs, managing databases, and ensuring scalability.</p></div></div>
-          <div class="col-sm-6"><div class="glass p-3 h-100"><h6>UI/UX Designer</h6><p class="text-white/70 text-sm">Designing user-friendly interfaces and smooth interactions.</p></div></div>
-          <div class="col-sm-6"><div class="glass p-3 h-100"><h6>Full Stack Developer</h6><p class="text-white/70 text-sm">Combining frontend and backend to build complete apps.</p></div></div>
+  <!-- PROJECTS -->
+  <section id="projects" class="py-10">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Selected Projects</h3>
+        <div class="text-sm text-white/70">Latest work & demos</div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up">
+          <div class="project-card glass p-3">
+            <img src="C:\Users\JEEVA\Desktop\portfolio\assets\port.png" alt="project" class="w-full rounded mb-3" style="height:180px; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="80">
+          <div class="project-card glass p-3">
+            <img src="C:\Users\JEEVA\Desktop\portfolio\assets\qr.jpeg" alt="project" class="w-full rounded mb-3" style="height:180px; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="160">
+          <div class="project-card glass p-3">
+            <img src="C:\Users\JEEVA\Desktop\portfolio\assets\dash.png" alt="project" class="w-full rounded mb-3" style="height:180px; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="160">
+          <div class="project-card glass p-3">
+            <img src="C:\Users\JEEVA\Desktop\portfolio\assets\finance.jpeg" alt="project" class="w-full rounded mb-3" style="height:180px; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="160">
+          <div class="project-card glass p-3">
+            <img src="C:\Users\JEEVA\Desktop\portfolio\assets\tea.jpeg" alt="project" class="w-full rounded mb-3" style="height:180px; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="160">
+          <div class="project-card glass p-3">
+            <img src="C:\Users\JEEVA\Desktop\portfolio\assets\admin.jpeg" alt="project" class="w-full rounded mb-3" style="height:180px; object-fit:cover;">
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="py-10">
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h3>Selected Projects</h3>
-      <div class="text-sm text-white/70">Latest work & demos</div>
-    </div>
-
-    <div class="row g-4">
-      <div class="col-md-4" data-aos="fade-up"><div class="project-card glass p-3"><img src="./assets/port.png" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;"></div></div>
-      <div class="col-md-4" data-aos="fade-up"><div class="project-card glass p-3"><img src="./assets/qr.jpeg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;"></div></div>
-      <div class="col-md-4" data-aos="fade-up"><div class="project-card glass p-3"><img src="./assets/dash.png" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;"></div></div>
-    </div>
-  </div>
-</section>
+  </section>
 
 <!-- CONTACT -->
 <section id="contact" class="py-16">
   <div class="container">
     <div class="glass p-5" data-aos="fade-up">
-      <h2 class="mb-4 text-center" style="font-size:1.6rem;">Contact Me</h2>
-      <form id="contactForm" class="mx-auto" style="max-width:900px;">
+      <h2 class="mb-4 text-center" style="font-size: 1.6rem;">Contact Me</h2>
+
+      <form id="contactForm" class="mx-auto" style="max-width: 900px;">
         <div class="row g-4">
-          <div class="col-md-6"><input id="name" placeholder="Your name" class="input-ghost" required></div>
-          <div class="col-md-6"><input id="email" placeholder="Your email" class="input-ghost" type="email" required></div>
-          <div class="col-md-12"><input id="subject" placeholder="Subject" class="input-ghost" required></div>
-          <div class="col-md-12"><textarea id="message" rows="6" placeholder="Message" class="input-ghost" required></textarea></div>
+          <div class="col-md-6">
+            <input id="name" placeholder="Your name" class="input-ghost w-100" required>
+          </div>
+          <div class="col-md-6">
+            <input id="email" placeholder="Your email" class="input-ghost w-100" type="email" required>
+          </div>
+          <div class="col-md-12">
+            <input id="subject" placeholder="Subject" class="input-ghost w-100" required>
+          </div>
+          <div class="col-md-12">
+            <textarea id="message" rows="6" placeholder="Message" class="input-ghost w-100" required></textarea>
+          </div>
         </div>
+
         <div class="d-flex justify-content-center gap-3 mt-4">
           <button type="button" id="sendEmail" class="btn btn-light px-4 py-2">Send Email</button>
-          <button type="button" id="sendWhatsapp" class="btn btn-success px-4 py-2"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+          <button type="button" id="sendWhatsapp" class="btn btn-success px-4 py-2">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </button>
         </div>
       </form>
     </div>
   </div>
 </section>
 
+<script>
+  const emailButton = document.getElementById("sendEmail");
+  const whatsappButton = document.getElementById("sendWhatsapp");
+
+  emailButton.addEventListener("click", () => {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const subject = document.getElementById("subject").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !subject || !message) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    // Change this to your email
+    const recipient = "preethinrsp@gmail.com"; 
+
+    const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    )}`;
+
+    window.location.href = mailtoLink;
+  });
+
+  whatsappButton.addEventListener("click", () => {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !message) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    // Change this to your WhatsApp number (with country code, e.g., 91 for India)
+    const phoneNumber = "919629300934"; 
+
+    const whatsappMessage = `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`;
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+    window.open(whatsappURL, "_blank");
+  });
+</script>
+
+
 <!-- CONTACT INFO -->
 <section id="contact-info" class="py-12">
   <div class="container">
     <div class="glass p-4 text-center" data-aos="fade-up">
-      <h2 class="mb-3 text-white" style="font-size:1.6rem;">Follow me on</h2>
+      <h2 class="mb-3 text-white" style="font-size: 1.6rem;">Follow me on</h2>
+      
+
       <div class="d-flex justify-content-center gap-4 flex-wrap align-items-center">
-        <a href="https://wa.me/919629300934" target="_blank" class="text-white" style="font-size:1.6rem;"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://github.com/preethi-114" target="_blank" class="text-white" style="font-size:1.6rem;"><i class="fab fa-github"></i></a>
-        <a href="mailto:preethinrsp@gmail.com" class="text-white" style="font-size:1.6rem;"><i class="fas fa-envelope"></i></a>
-        <a href="tel:+919629300934" class="text-white" style="font-size:1.4rem;"><i class="fas fa-phone"></i></a>
-        <a href="https://www.linkedin.com/in/preethi-s-20a034289" target="_blank" class="text-white" style="font-size:1.6rem;"><i class="fab fa-linkedin"></i></a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/919629300934" target="_blank" class="text-white" style="font-size: 1.6rem;">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/preethi-114" target="_blank" class="text-white" style="font-size: 1.6rem;">
+          <i class="fab fa-github"></i>
+        </a>
+
+        <!-- Email -->
+        <a href="mailto:preethinrsp@gmail.com" class="text-white" style="font-size: 1.6rem;">
+          <i class="fas fa-envelope"></i>
+        </a>
+
+        <!-- Phone -->
+        <a href="tel:+919629300934" class="text-white" style="font-size: 1.4rem;">
+          <i class="fas fa-phone"></i>
+        </a>
+
+        <!-- LinkedIn -->
+         <a href="https://www.linkedin.com/in/preethi-s-20a034289" target="_blank" class="text-white" style="font-size: 1.6rem;">
+          <i class="fab fa-linkedin"></i>
+        </a>
+
       </div>
     </div>
   </div>
 </section>
 
-<!-- Scripts -->
+<style>
+#contact-info a {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.85;
+}
+#contact-info a:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+</style>
+
+
+<!-- optional smooth hover animation -->
+<style>
+#contact-info a {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.85;
+}
+#contact-info a:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+</style>
+
+
+  <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-AOS.init({ duration:700, once:true });
+  AOS.init({ duration:700, once:true });
 
-// Typing animation
-window.addEventListener('DOMContentLoaded', () => {
-  const lines = ["I'm Preethi","I build modern web applications.","I'm a designer.","I'm a creative.","I'm a coder"];
-  let li = 0, ci = 0, forward = true;
-  const typed = document.getElementById('typedLine');
-  function typing(){
-    const current = lines[li];
-    if(forward){
-      ci++;
-      typed.textContent = current.substring(0,ci);
-      if(ci === current.length){forward=false;setTimeout(typing,1200);return;}
-    } else {
-      ci--;
-      typed.textContent = current.substring(0,ci);
-      if(ci===0){forward=true;li=(li+1)%lines.length;}
+  window.addEventListener('DOMContentLoaded', () => {
+
+    // Typing effect
+    const lines = ["I'm Preethi","I build modern web applications.", "I'm a designer.", "I'm  a Creative.","I'm a coder"];
+    let li = 0, ci = 0, forward = true;
+    const typed = document.getElementById('typedLine');
+
+    function typing() {
+      const current = lines[li];
+      if (forward) {
+        ci++;
+        typed.textContent = current.substring(0, ci);
+        if (ci === current.length) { forward = false; setTimeout(typing, 1200); return; }
+      } else {
+        ci--;
+        typed.textContent = current.substring(0, ci);
+        if (ci === 0) { forward = true; li = (li + 1) % lines.length; }
+      }
+      setTimeout(typing, forward ? 80 : 30);
     }
-    setTimeout(typing, forward?80:30);
-  }
-  typing();
+    typing();
 
-  // Email button
-  document.getElementById("sendEmail").addEventListener("click", () => {
-    const name=document.getElementById("name").value.trim();
-    const email=document.getElementById("email").value.trim();
-    const subject=document.getElementById("subject").value.trim();
-    const message=document.getElementById("message").value.trim();
-    if(!name||!email||!subject||!message){alert("Please fill all fields.");return;}
-    const mailto=`mailto:preethinrsp@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Name: "+name+"\nEmail: "+email+"\n\n"+message)}`;
-    window.location.href=mailto;
-  });
+    // WhatsApp
+    const WA_NUMBER = '919629300934';
+    document.getElementById('sendWhatsapp').addEventListener('click', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if (!name || !email || !subject || !message) { alert('Please fill all fields.'); return; }
+      const text = `Hello!%0A*Name:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A*Subject:* ${encodeURIComponent(subject)}%0A*Message:* ${encodeURIComponent(message)}`;
+      window.open(`https://wa.me/${WA_NUMBER}?text=${text}`, '_blank');
+    });
 
-  // WhatsApp button
-  document.getElementById("sendWhatsapp").addEventListener("click", () => {
-    const name=document.getElementById("name").value.trim();
-    const message=document.getElementById("message").value.trim();
-    if(!name||!message){alert("Please enter your name and message.");return;}
-    const url=`https://wa.me/919629300934?text=${encodeURIComponent("Hello, I'm "+name+". "+message)}`;
-    window.open(url,'_blank');
+    // Email
+    document.getElementById('sendEmail').addEventListener('click', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if (!name || !email || !subject || !message) { alert('Please fill all fields.'); return; }
+      const body = `Name: ${name}%0AEmail: ${email}%0A%0A${encodeURIComponent(message)}`;
+      window.location.href = "mailto:preethinrsp@gmail.com?subject=Hello&body=This is a test";
+
+    });
+
   });
-});
 </script>
 
 </body>
